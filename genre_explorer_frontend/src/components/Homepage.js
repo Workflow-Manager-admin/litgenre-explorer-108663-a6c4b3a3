@@ -5,7 +5,7 @@ import bgBooks from "../assets/background-books.jpg";
 /**
  * PUBLIC_INTERFACE
  * Homepage: Landing page introducing the app and allowing navigation to explore genres and features.
- * Now enhanced to include additional attractive images and an animated/rotating literary quotes section.
+ * Updated to display only a single, well-aligned, responsive hero image.
  */
 function Homepage({ navigate }) {
   // Rotating literary quotes data
@@ -50,13 +50,9 @@ function Homepage({ navigate }) {
     if (navigate) navigate("/explore");
   };
 
-  // Asset handling: Additional book-related image from unsplash (license-permitted for educational/personal use)
-  // App asset background-books.jpg is already included. We'll add Unsplash book stack and reading glasses.
-  const decorativeBookStack =
-    "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=420&q=80";
-  const decorativeGlasses =
-    "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=320&q=80";
-
+  // Only one hero image from local assets (background-books.jpg)
+  // We'll reuse this as both the page background (as in App.js) and as a hero illustration.
+  // The hero image below the headline
   return (
     <section
       className="homepage-bg"
@@ -64,27 +60,6 @@ function Homepage({ navigate }) {
         background: `url(${bgBooks}) center/cover no-repeat fixed`
       }}
     >
-      {/* Decorative Images from local assets and web */}
-      {/* -- Local asset (background-books.jpg) is set in App.js background -- */}
-      {/* -- Decorative Stack of Books (bottom left) -- */}
-      <img
-        src={decorativeBookStack}
-        className="hp-illustration homepage-img"
-        alt="Stack of books"
-        aria-hidden="true"
-        tabIndex={-1}
-        draggable="false"
-      />
-      {/* -- Decorative Reading Glasses on Book (top right) -- */}
-      <img
-        src={decorativeGlasses}
-        className="hp-reader homepage-img"
-        alt="Reading glasses on a book"
-        aria-hidden="true"
-        tabIndex={-1}
-        draggable="false"
-      />
-
       <div className="homepage-content">
         <h2 style={{
           fontWeight: 800,
@@ -96,6 +71,22 @@ function Homepage({ navigate }) {
         }}>
           Welcome to <span style={{ color: "var(--accent)" }}>LitGenre Explorer</span>!
         </h2>
+        <img
+          src={bgBooks}
+          className="hero-homepage-img"
+          alt="Books illustration"
+          draggable="false"
+          style={{
+            maxWidth: "370px",
+            width: "90vw",
+            minWidth: "120px",
+            maxHeight: "210px",
+            borderRadius: "16px",
+            marginBottom: "2.2rem",
+            boxShadow: "0 10px 28px rgba(80,80,120,0.13), 0 2px 9px rgba(66,60,80,0.09)",
+            objectFit: "cover"
+          }}
+        />
         <p style={{
           maxWidth: 540,
           margin: "0 0 2.2rem 0",
