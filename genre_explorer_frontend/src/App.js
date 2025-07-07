@@ -6,6 +6,8 @@ import GenreSelector from './components/GenreSelector';
 import BookGridContainer from './components/BookGridContainer';
 import GenreSummary from './components/GenreSummary';
 import Homepage from './components/Homepage';
+// Import background image for global app background
+import bgBooks from './assets/background-books.jpg';
 
 /**
  * Main App component with routing for homepage and genre explorer.
@@ -38,9 +40,20 @@ function AppLayout() {
     // Optionally navigate to /explore, but if homepage holds selector, don't redirect
   };
 
+  // Theme effect (light/dark)
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+  // Set CSS var for background image (ensures correct path in build/dist too)
+  useEffect(() => {
+    if (bgBooks) {
+      document.documentElement.style.setProperty('--bg-img-url', `url(${bgBooks})`);
+    }
+    return () => {
+      // Remove if component unmounts or before reassign
+      document.documentElement.style.removeProperty('--bg-img-url');
+    };
+  }, []);
 
   return (
     <div className="App">
