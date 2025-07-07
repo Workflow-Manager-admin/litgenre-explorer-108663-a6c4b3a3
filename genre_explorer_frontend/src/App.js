@@ -83,8 +83,6 @@ function AppLayout() {
             path="/"
             element={
               <Homepage
-                selectedGenre={selectedGenre}
-                onSelectGenre={handleGenreChange}
                 navigate={navigate}
               />
             }

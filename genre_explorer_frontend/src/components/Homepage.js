@@ -5,13 +5,13 @@ import bgBooks from "../assets/background-books.jpg";
 /**
  * PUBLIC_INTERFACE
  * Homepage: Landing page introducing the app and allowing navigation to explore genres and features.
- * @param {string} selectedGenre
- * @param {function} onSelectGenre
- * @param {function} navigate
+ * This homepage should NOT include any genre selection or routing logic other than a button to explore genres.
  */
-function Homepage({ selectedGenre, onSelectGenre, navigate }) {
+function Homepage({ navigate }) {
   const handleContinue = () => {
-    navigate("/explore");
+    if (navigate) {
+      navigate("/explore");
+    }
   };
 
   return (
