@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import GenreSelector from './components/GenreSelector';
 import BookGrid from './components/BookGrid';
+import GenreSummary from './components/GenreSummary';
 
 /**
  * Main App component. Handles theme, genre selection, and book search/fetch/display.
@@ -114,6 +115,7 @@ function App() {
         </a>
       </header>
       <main>
+        <GenreSummary genre={selectedGenre} />
         <BookGrid
           books={books}
           loadingMessage={loadingBooks ? "Loading books..." : ""}
