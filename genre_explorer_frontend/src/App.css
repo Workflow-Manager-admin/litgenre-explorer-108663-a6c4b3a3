@@ -71,9 +71,91 @@
   font-family: var(--font-main);
   font-size: 2.1rem;
   font-weight: 720;
-  color: var(--secondary);
+  /* color removed in favor of per-span */
   letter-spacing: 0.02em;
   margin: 0.3rem 0 0rem 0;
+}
+
+/* ----- Multi-Color App Title Classes ----- */
+.app-title-accent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0;
+  background: none;
+  padding: 0;
+  line-height: 1.1;
+  border: none;
+}
+
+.lg-accent-primary {
+  color: var(--secondary);
+  background: linear-gradient(92deg, var(--secondary) 60%, var(--accent) 130%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.lg-accent-secondary {
+  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent) 20%, var(--primary) 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 780;
+  padding-left: 3px;
+  padding-right: 1px;
+}
+
+.lg-accent-accent {
+  color: var(--primary, #2D2D2D);
+  /* fallback for dark theme as well */
+  background: linear-gradient(90deg, var(--primary) 30%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  padding-left: 2px;
+}
+
+/* Dark mode contrast for accent title */
+[data-theme="dark"] .lg-accent-primary {
+  color: var(--text-secondary);
+  background: linear-gradient(92deg, var(--text-secondary) 68%, var(--accent) 120%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="dark"] .lg-accent-secondary {
+  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent) 10%, var(--text-secondary) 140%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="dark"] .lg-accent-accent {
+  color: var(--text-primary, #fff);
+  background: linear-gradient(91deg, var(--accent) 5%, var(--text-primary) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Responsive: shrink app title size on mobile for accent styles */
+@media (max-width: 768px) {
+  .App-header h1,
+  .app-title-accent {
+    font-size: 1.22rem !important;
+    padding: 0 1.5px;
+  }
+  .lg-accent-primary, .lg-accent-secondary, .lg-accent-accent {
+    font-size: 1.02rem;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 
 .App-link {

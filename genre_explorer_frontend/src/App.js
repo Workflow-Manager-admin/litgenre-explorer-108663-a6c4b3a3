@@ -55,15 +55,17 @@ function AppLayout() {
         <img src={logo} className="App-logo" alt="logo" />
         <Link to="/" style={{ textDecoration: 'none' }}>
           <h1
+            className="app-title-accent"
             style={{
               margin: '12px 0 0 0',
               fontWeight: 700,
               fontSize: '2rem',
-              letterSpacing: '0.01em',
-              color: 'var(--text-primary)'
+              letterSpacing: '0.01em'
             }}
           >
-            LitGenre Explorer
+            <span className="lg-accent-primary">Lit</span>
+            <span className="lg-accent-secondary">Genre</span>
+            <span className="lg-accent-accent"> Explorer</span>
           </h1>
         </Link>
         <nav style={{ marginTop: 14 }}>
