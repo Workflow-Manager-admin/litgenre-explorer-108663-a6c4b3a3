@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BookGrid from "./BookGrid";
+import AddBookModal from "./AddBookModal";
 
 /**
  * PUBLIC_INTERFACE
@@ -9,10 +10,14 @@ import BookGrid from "./BookGrid";
  */
 function BookGridContainer({ genre }) {
   const [books, setBooks] = useState([]);
+  const [userBooks, setUserBooks] = useState([]); // local books for current genre
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [error, setError] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
+    // Reset user books when genre changes
+    setUserBooks([]);
     if (!genre) {
       setBooks([]);
       setError('');
@@ -48,12 +53,42 @@ function BookGridContainer({ genre }) {
       });
   }, [genre]);
 
+  // PUBLIC_INTERFACE
+  const handleAddBook = (bookObj) => {
+    // Only add book if it matches current genre
+    if (
+      !bookObj ||
+      !bookObj.volumeInfo ||
+      !bookObj.volumeInfo.genre ||
+      bookObj.volumeInfo.genre.trim().toLowerCase() !== genre?.toLowerCase()
+    ) {
+      // Defensive, but the genre input is locked by default
+      return;
+    }
+    setUserBooks((books) => [
+      ...books,
+      { ...bookObj, id: bookObj.id || "manual_" + Math.random().toString(36).slice(2, 9) },
+    ]);
+  };
+
   return (
-    <BookGrid
-      books={books}
-      loadingMessage={loadingBooks ? "Loading books..." : ""}
-      errorMessage={error}
-    />
+    <>
+      <BookGrid
+        books={books}
+        userBooks={userBooks}
+        loadingMessage={loadingBooks ? "Loading books..." : ""}
+        errorMessage={error}
+        onAddBookClick={() => setShowAddModal(true)}
+      />
+      {showAddModal && (
+        <AddBookModal
+          open={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onAddBook={handleAddBook}
+          defaultGenre={genre}
+        />
+      )}
+    </>
   );
 }
 
