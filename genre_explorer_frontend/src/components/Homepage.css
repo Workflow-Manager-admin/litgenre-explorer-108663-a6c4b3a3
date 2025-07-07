@@ -1,210 +1,228 @@
-/* --- Animations for Homepage --- */
 @keyframes homepage-fade-slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(38px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1.0);
-  }
+  from { opacity: 0; transform: translateY(36px) scale(0.98);}
+  to   { opacity: 1;   transform: translateY(0) scale(1);}
 }
-@keyframes homepage-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes image-scale-in {
-  from { opacity: 0; transform: scale(0.88);}
-  68%  { opacity: 1; transform: scale(1.09);}
+@keyframes homepage-fade-in { from { opacity: 0;} to { opacity: 1;} }
+@keyframes hero-parallax-zoom-in {
+  from { opacity: 0; transform: scale(0.965);}
+  65%  { opacity: 1; transform: scale(1.07);}
   to   { opacity: 1; transform: scale(1);}
 }
 
-/* --- Quote section animation --- */
-@keyframes quote-fade-in-move {
-  0% {
-    opacity: 0;
-    transform: translateY(18px) scale(0.98);
-  }
-  80% {
-    opacity: 0.97;
-    transform: translateY(-1px) scale(1.01);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1.0);
-  }
+/* Page root */
+.homepage-root {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background: none;
+  box-sizing: border-box;
 }
 
-@keyframes quote-glow {
-  0% { text-shadow: 0 0 0 #FFF8, 0 0 0 #d1b570; }
-  60% { text-shadow: 0 0 18px #ffd, 0 2.5px 15px #ffd47a; }
-  99% { text-shadow: 0 0 5px #ffd, 0 2.5px 7px #ffd47a; }
-  100% { text-shadow: 0 0 0 #FFF8, 0 0 0 #d1b570; }
-}
-
-.homepage-bg {
-  position: relative;
-  min-height: 85vh;
+/* --- HERO SECTION (parallax image + overlay/heading) --- */
+.homepage-hero-parallax {
   width: 100%;
+  min-height: 48vh;
+  max-height: 520px;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hero-parallax-zoom-in 0.93s cubic-bezier(.12,.91,.32,1.11) 0.11s both;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(130deg, rgba(252,252,255,0.96) 52%, rgba(230,235,255,0.90) 95%);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  /* background-image will be applied inline from React via imported asset */
-  padding: 2.5rem 0.5rem 2.5rem 0.5rem;
-  overflow: hidden;
-  animation: homepage-fade-in 0.74s cubic-bezier(0.11, 0.62, 0.23, 1.01) 0.08s both;
-}
-
-.homepage-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(180deg, rgba(250,250,255,0.94) 45%, rgba(255,255,255,0.82) 90%);
-  pointer-events: none;
-}
-
-/* --- Hero homepage image (only one image remains) --- */
-.hero-homepage-img {
-  display: block;
-  max-width: 370px;
-  width: 90vw;
-  min-width: 120px;
-  max-height: 210px;
-  min-height: 58px;
-  margin: 0 0 2.2rem 0;
-  padding: 0;
-  background: #eee;
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(80,80,120,0.13), 0 2px 9px rgba(66,60,80,0.09);
-  object-fit: cover;
-  transition: box-shadow 0.19s, transform 0.19s;
-}
-
-.hero-homepage-img:focus-visible, .hero-homepage-img:hover {
-  box-shadow: 0 16px 38px rgba(120,108,80,0.21), 0 6px 14px rgba(60,30,10,0.11);
-  outline: 2.5px solid var(--secondary, #6C63FF);
-  outline-offset: 1.5px;
-  transform: scale(1.012);
-}
-
-@media (max-width: 600px) {
-  .homepage-bg {
-    padding: 2rem 0.2rem 1.7rem 0.2rem;
-    min-height: 69vh;
-  }
-  .hero-homepage-img {
-    max-width: 95vw;
-    max-height: 120px;
-    min-width: 64px;
-    min-height: 36px;
-    margin-bottom: 1.3rem;
-    border-radius: 9px;
-  }
-}
-
-.homepage-content {
-  position: relative;
-  z-index: 1;
-  max-width: 820px;
+  padding: 54px 2vw 25px 2vw;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: homepage-fade-slide-up 0.82s cubic-bezier(.13,.92,.36,1.12) 0.15s both;
-  /* prevent flash: */
-  opacity: 0;
-  will-change: transform, opacity;
+  max-width: 1042px;
 }
 
-.homepage-cta-btn-animate {
-  opacity: 0;
-  animation: homepage-fade-slide-up 0.63s cubic-bezier(.2,.93,.31,1.13) 0.36s both;
+/* Headline */
+.homepage-title {
+  font-family: var(--font-main, 'Inter', 'Segoe UI', Arial, sans-serif);
+  font-size: 2.6rem;
+  font-weight: 900;
+  margin: 0.13em 0 0.38em 0;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  color: var(--primary, #2D2D2D);
+  text-align: center;
   outline: none;
-  transition:
-    box-shadow 0.19s cubic-bezier(.20,.81,.73,1.27),
-    transform 0.19s cubic-bezier(.19,.65,.66,1.11),
-    background 0.22s, color 0.19s;
+  background: none;
+  will-change: opacity, transform;
+  animation: homepage-fade-slide-up 0.65s cubic-bezier(.14,.81,.37,1.09) 0.22s both;
 }
-.homepage-cta-btn-animate:focus-visible {
-  outline: 2.5px solid var(--accent, #FF6F61);
-  outline-offset: 2.5px;
-  box-shadow: 0 0 0 6px rgba(255,111,97,0.12), 0 6px 28px rgba(44,34,144,0.09);
+.title-main { color: var(--primary); }
+.title-highlight {
+  color: var(--secondary, #6C63FF);
+  background: linear-gradient(91deg, var(--secondary) 48%, var(--accent) 93%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 790;
+  padding-right: 2px;
+}
+.title-accent {
+  color: var(--accent, #FF6F61);
+  font-weight: 790;
+}
+@media (max-width: 600px) {
+  .homepage-title { font-size: 1.34rem; }
+}
+
+/* Subtitle */
+.homepage-subtitle {
+  margin: 0 0 1.3em 0;
+  max-width: 540px;
+  font-size: 1.11rem;
+  font-weight: 520;
+  text-align: center;
+  color: var(--text-primary, #212126);
+  background: rgba(252,252,255,0.83);
+  border-radius: 7px;
+  padding: 11px 13px 10px 13px;
+  box-shadow: 0 4px 13px rgba(90,99,120,0.07);
+  animation: homepage-fade-in 0.6s 0.33s both;
+}
+
+/* CTA BUTTON STYLES */
+.homepage-cta-btn {
+  background: var(--button-bg, var(--secondary));
+  color: var(--button-text, #fff);
+  border: none;
+  border-radius: 11px;
+  margin-top: 34px;
+  padding: 15px 32px 15px 32px;
+  font-size: 1.23rem;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(90,120,160,0.11);
+  transition: 
+    background 0.22s,
+    color 0.19s,
+    box-shadow 0.29s cubic-bezier(.22,.82,.62,1.09),
+    transform 0.21s cubic-bezier(.21,.8,.46,1.18);
+  outline: none;
+  opacity: 0;
+  animation: homepage-fade-slide-up 0.82s cubic-bezier(.19,.91,.38,1.13) 0.38s both;
+}
+.homepage-cta-btn:focus-visible {
+  outline: 3.5px solid var(--accent, #FF6F61);
+  outline-offset: 3px;
   background: var(--accent, #FF6F61);
   color: #fff;
+  box-shadow: 0 0 0 8px rgba(255,111,97,0.12), 0 6px 28px rgba(44,34,144,0.09);
+  transform: translateY(-2px) scale(1.027);
 }
-.homepage-cta-btn-animate:hover {
+.homepage-cta-btn:hover {
   background: var(--accent, #FF6F61);
   color: #fff;
-  transform: translateY(-3.5px) scale(1.037);
-  box-shadow: 0 6px 24px rgba(255,111,97,0.15);
+  transform: translateY(-3.5px) scale(1.045);
+  box-shadow: 0 8px 24px rgba(255,111,97,0.14);
 }
-.homepage-cta-btn-animate:active {
-  transform: scale(0.97);
+.homepage-cta-btn:active {
+  transform: scale(0.98);
   filter: brightness(0.98);
 }
 
-/* --- Quotes Section Styles --- */
+@media (max-width: 600px) {
+  .homepage-hero-parallax {
+    min-height: 32vh;
+    max-height: 320px;
+    padding: 0;
+    background-position: center 0;
+    background-attachment: scroll;
+  }
+  .hero-content { padding: 29px 2vw 10px 2vw; }
+  .homepage-cta-btn {
+    padding: 8px 13vw;
+    font-size: 1rem;
+    min-width: 140px;
+    margin-top: 19px;
+  }
+}
 
+/* --- QUOTES / Testimonials Section Styles --- */
 .homepage-quotes-area {
-  margin: 0 auto 1.4rem auto;
+  margin: 0 auto 2.2rem auto;
   padding: 0 0 0.6rem 0;
   min-height: 90px;
   min-width: 120px;
   width: 100%;
-  max-width: 680px;
+  max-width: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .homepage-quote {
-  background: linear-gradient(103deg, rgba(255,255,255,0.80) 56%, rgba(240,245,250,0.88) 97%);
+  background: linear-gradient(106deg, rgba(255,255,255,0.84) 52%, rgba(247,247,255,0.92) 99%);
   border-radius: 14px;
   box-shadow: 0 8px 21px rgba(120,114,150,0.10);
-  padding: 1.13em 2.1em 0.97em 2.7em;
+  padding: 1.16em 2.1em 1.07em 2.5em;
   margin: 0 auto 0 auto;
   font-style: italic;
-  font-size: 1.36rem;
+  font-size: 1.28rem;
   color: var(--accent, #FF6F61);
-  max-width: 640px;
+  max-width: 652px;
   text-align: center;
-  overflow: hidden;
-  line-height: 1.45;
+  line-height: 1.46;
   position: relative;
-  opacity: 1;
 }
-
+@keyframes quote-fade-in-move {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.97);}
+  80%  { opacity: 0.98; transform: translateY(-1px) scale(1.01);}
+  100% { opacity: 1; transform: translateY(0) scale(1.0);}
+}
 .animated-quote {
   animation: quote-fade-in-move 0.82s cubic-bezier(.17,.81,.46,1.01) both;
-  transition: opacity 0.49s cubic-bezier(.21,.72,.53,1.16);
 }
 
 .homepage-quote blockquote {
-  margin: 0 0 0.34em 0;
-  padding: 0;
+  margin: 0 0 0.37em 0;
   font-style: inherit;
   font-size: inherit;
   color: inherit;
   font-family: var(--font-main, serif);
-  position: relative;
-  z-index: 2;
   background: none;
   border: none;
-  line-height: 1.43;
+  line-height: 1.44;
 }
-
-.homepage-quote .quote-mark {
-  font-size: 2.2em;
+.quote-mark {
+  font-size: 2.08em;
   font-weight: 900;
   color: var(--secondary, #6C63FF);
   letter-spacing: -0.13em;
-  padding: 0 0.1em;
   user-select: none;
+  padding: 0 0.1em;
   animation: quote-glow 3.2s cubic-bezier(.55,.09,.58,1.09) alternate infinite;
 }
-
+@keyframes quote-glow {
+  0% { text-shadow: 0 0 0 #FFF8, 0 0 0 #d1b570; }
+  60% { text-shadow: 0 0 18px #ffd, 0 2.5px 15px #ffd47a;}
+  99% { text-shadow: 0 0 5px #ffd, 0 2.5px 7px #ffd47a;}
+  100% { text-shadow: 0 0 0 #FFF8, 0 0 0 #d1b570; }
+}
 .homepage-quote-author {
   font-family: var(--font-main, serif);
   font-size: 1.06em;
@@ -216,161 +234,19 @@
 }
 
 .homepage-quote figcaption {
-  margin-top: 0.64em;
+  margin-top: 0.67em;
   color: var(--primary, #2d2d2d);
   font-weight: 520;
   font-size: 1em;
-  text-align: right;
   opacity: 0.83;
 }
 
-@media (max-width: 600px) {
-  .homepage-quotes-area {
-    max-width: 99vw;
-    padding: 0 0.1em 0 0.1em;
-  }
-  .homepage-quote {
-    font-size: 1.04rem;
-    padding: 0.85em 0.3em 0.9em 0.93em;
-  }
-}
-.homepage-content {
-  position: relative;
-  z-index: 1;
-  max-width: 820px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: homepage-fade-slide-up 0.82s cubic-bezier(.13,.92,.36,1.12) 0.15s both;
-  /* prevent flash: */
-  opacity: 0;
-  will-change: transform, opacity;
+@media (max-width: 650px) {
+  .homepage-quotes-area { max-width: 99vw;}
+  .homepage-quote { font-size: 1rem; padding: 0.85em 0.23em 0.9em 1.1em;}
 }
 
-.hp-illustration,
-.hp-reader {
-  animation: image-scale-in 0.93s cubic-bezier(.12,.91,.32,1.11) 0.28s both;
-}
-.hp-reader {
-  animation-delay: 0.48s;
-}
-
-.homepage-cta-btn-animate {
-  opacity: 0;
-  animation: homepage-fade-slide-up 0.63s cubic-bezier(.2,.93,.31,1.13) 0.36s both;
-  outline: none;
-  transition:
-    box-shadow 0.19s cubic-bezier(.20,.81,.73,1.27),
-    transform 0.19s cubic-bezier(.19,.65,.66,1.11),
-    background 0.22s, color 0.19s;
-}
-.homepage-cta-btn-animate:focus-visible {
-  outline: 2.5px solid var(--accent, #FF6F61);
-  outline-offset: 2.5px;
-  box-shadow: 0 0 0 6px rgba(255,111,97,0.12), 0 6px 28px rgba(44,34,144,0.09);
-  background: var(--accent, #FF6F61);
-  color: #fff;
-}
-
-.homepage-cta-btn-animate:hover {
-  background: var(--accent, #FF6F61);
-  color: #fff;
-  transform: translateY(-3.5px) scale(1.037);
-  box-shadow: 0 6px 24px rgba(255,111,97,0.15);
-}
-
-.homepage-cta-btn-animate:active {
-  transform: scale(0.97);
-  filter: brightness(0.98);
-}
-
-/* --- Quotes Section Styles --- */
-
-.homepage-quotes-area {
-  margin: 0 auto 1.4rem auto;
-  padding: 0 0 0.6rem 0;
-  min-height: 90px;
-  min-width: 120px;
-  width: 100%;
-  max-width: 680px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.homepage-quote {
-  background: linear-gradient(103deg, rgba(255,255,255,0.80) 56%, rgba(240,245,250,0.88) 97%);
-  border-radius: 14px;
-  box-shadow: 0 8px 21px rgba(120,114,150,0.10);
-  padding: 1.13em 2.1em 0.97em 2.7em;
-  margin: 0 auto 0 auto;
-  font-style: italic;
-  font-size: 1.36rem;
-  color: var(--accent, #FF6F61);
-  max-width: 640px;
-  text-align: center;
-  overflow: hidden;
-  line-height: 1.45;
-  position: relative;
-  opacity: 1;
-}
-
-.animated-quote {
-  animation: quote-fade-in-move 0.82s cubic-bezier(.17,.81,.46,1.01) both;
-  transition: opacity 0.49s cubic-bezier(.21,.72,.53,1.16);
-}
-
-.homepage-quote blockquote {
-  margin: 0 0 0.34em 0;
-  padding: 0;
-  font-style: inherit;
-  font-size: inherit;
-  color: inherit;
-  font-family: var(--font-main, serif);
-  position: relative;
-  z-index: 2;
-  background: none;
-  border: none;
-  line-height: 1.43;
-}
-
-.homepage-quote .quote-mark {
-  font-size: 2.2em;
-  font-weight: 900;
-  color: var(--secondary, #6C63FF);
-  letter-spacing: -0.13em;
-  padding: 0 0.1em;
-  user-select: none;
-  animation: quote-glow 3.2s cubic-bezier(.55,.09,.58,1.09) alternate infinite;
-}
-
-.homepage-quote-author {
-  font-family: var(--font-main, serif);
-  font-size: 1.06em;
-  color: var(--primary, #2d2d2d);
-  font-style: normal;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  text-shadow: 0 2px 6px rgba(220,210,147,0.16);
-}
-
-.homepage-quote figcaption {
-  margin-top: 0.64em;
-  color: var(--primary, #2d2d2d);
-  font-weight: 520;
-  font-size: 1em;
-  text-align: right;
-  opacity: 0.83;
-}
-
-@media (max-width: 600px) {
-  .homepage-quotes-area {
-    max-width: 99vw;
-    padding: 0 0.1em 0 0.1em;
-  }
-  .homepage-quote {
-    font-size: 1.04rem;
-    padding: 0.85em 0.3em 0.9em 0.93em;
-  }
+@media (max-width: 440px) {
+  .homepage-hero-parallax { min-height: 90px; }
+  .homepage-quote { font-size: 0.92rem; padding: 0.49em 0.06em 0.61em 0.75em;}
 }

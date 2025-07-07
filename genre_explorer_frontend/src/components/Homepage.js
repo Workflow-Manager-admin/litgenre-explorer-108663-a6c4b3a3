@@ -4,31 +4,35 @@ import bgBooks from "../assets/background-books.jpg";
 
 /**
  * PUBLIC_INTERFACE
- * Homepage: Landing page introducing the app and allowing navigation to explore genres and features.
- * Updated to display only a single, well-aligned, responsive hero image.
+ * Homepage: Enhanced landing page with hero section, animated call-to-action, and rotating quotes/testimonials.
+ * Features:
+ * - Hero (header) with parallax image background and headline
+ * - High-visibility stylized CTA button (keyboard and screenreader accessible)
+ * - Responsive design with testimonials/quotes section below hero
+ * - Accessible, clean, and visually appealing
  */
 function Homepage({ navigate }) {
-  // Rotating literary quotes data
+  // Literary quotes/testimonials (rotating carousel)
   const literaryQuotes = [
     {
-      text: "A reader lives a thousand lives before he dies. — George R. R. Martin",
-      author: "George R. R. Martin",
+      text: "A reader lives a thousand lives before he dies.",
+      author: "George R. R. Martin"
     },
     {
-      text: "So many books, so little time. — Frank Zappa",
-      author: "Frank Zappa",
+      text: "So many books, so little time.",
+      author: "Frank Zappa"
     },
     {
-      text: "There is no friend as loyal as a book. — Ernest Hemingway",
-      author: "Ernest Hemingway",
+      text: "There is no friend as loyal as a book.",
+      author: "Ernest Hemingway"
     },
     {
-      text: "Books are a uniquely portable magic. — Stephen King",
-      author: "Stephen King",
+      text: "Books are a uniquely portable magic.",
+      author: "Stephen King"
     },
     {
-      text: "If you only read the books that everyone else is reading, you can only think what everyone else is thinking. — Haruki Murakami",
-      author: "Haruki Murakami",
+      text: "If you only read the books that everyone else is reading, you can only think what everyone else is thinking.",
+      author: "Haruki Murakami"
     }
   ];
 
@@ -41,9 +45,22 @@ function Homepage({ navigate }) {
       setQuoteIdx(prev =>
         prev + 1 < literaryQuotes.length ? prev + 1 : 0
       );
-    }, 4500);
+    }, 4800);
     return () => clearInterval(quoteTimer.current);
     // eslint-disable-next-line
+  }, []);
+
+  // Subtle parallax effect for hero background as user scrolls (mobile-optimized, no jank)
+  useEffect(() => {
+    const hero = document.querySelector('.homepage-hero-parallax');
+    function handleScroll() {
+      // Parallax: move background y-position slower than scroll
+      if (!hero) return;
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      hero.style.backgroundPositionY = `${Math.max(-scrollY * 0.25, -44)}px`;
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleContinue = () => {
@@ -51,86 +68,53 @@ function Homepage({ navigate }) {
   };
 
   // Only one hero image from local assets (background-books.jpg)
-  // We'll reuse this as both the page background (as in App.js) and as a hero illustration.
-  // The hero image below the headline
+  // The hero image is background + illustration + heading overlayed.
   return (
-    <section
-      className="homepage-bg"
-      style={{
-        background: `url(${bgBooks}) center/cover no-repeat fixed`
-      }}
-    >
-      <div className="homepage-content">
-        <h2 style={{
-          fontWeight: 800,
-          fontSize: "2.2rem",
-          marginBottom: "1rem",
-          color: "var(--secondary)",
-          letterSpacing: "0.01em",
-          textShadow: "0 2px 15px rgba(110,110,180,0.07)"
-        }}>
-          Welcome to <span style={{ color: "var(--accent)" }}>LitGenre Explorer</span>!
-        </h2>
-        <img
-          src={bgBooks}
-          className="hero-homepage-img"
-          alt="Books illustration"
-          draggable="false"
-          style={{
-            maxWidth: "370px",
-            width: "90vw",
-            minWidth: "120px",
-            maxHeight: "210px",
-            borderRadius: "16px",
-            marginBottom: "2.2rem",
-            boxShadow: "0 10px 28px rgba(80,80,120,0.13), 0 2px 9px rgba(66,60,80,0.09)",
-            objectFit: "cover"
-          }}
-        />
-        <p style={{
-          maxWidth: 540,
-          margin: "0 0 2.2rem 0",
-          fontSize: "1.15rem",
-          color: "var(--text-primary)",
-          lineHeight: 1.57,
-          textAlign: "center",
-          background: "rgba(254,254,255,0.81)",
-          borderRadius: 7,
-          padding: "12px 10px",
-          boxShadow: "0 4px 16px rgba(90,99,120,0.07)"
-        }}>
-          Discover the world of literature by exploring popular genres and influential books.
-          Jump into the <b>Explore</b> section to find book recommendations and insightful genre summaries.
-        </p>
-
-        {/* Literary Quotes Section */}
-        <div className="homepage-quotes-area" aria-live="polite">
-          <figure key={quoteIdx} className="homepage-quote animated-quote">
-            <blockquote>
-              <span className="quote-mark" aria-hidden="true">“</span>
-              {literaryQuotes[quoteIdx].text.replace(/^[“"]|[”"]$/g, "")}
-              <span className="quote-mark" aria-hidden="true">”</span>
-            </blockquote>
-            <figcaption>
-              — <span className="homepage-quote-author">{literaryQuotes[quoteIdx].author}</span>
-            </figcaption>
-          </figure>
+    <div className="homepage-root">
+      {/* HERO SECTION */}
+      <section
+        className="homepage-hero-parallax"
+        style={{
+          backgroundImage: `url(${bgBooks})`,
+        }}
+        aria-label="Literary genres hero image"
+      >
+        <div className="hero-overlay" />
+        <div className="hero-content">
+          <h1 className="homepage-title" tabIndex={0}>
+            <span className="title-main">Explore </span>
+            <span className="title-highlight">Genres</span>
+            <span className="title-main">, Discover</span>
+            <span className="title-accent"> Books.</span>
+          </h1>
+          <p className="homepage-subtitle">
+            Find your next favorite read. Start your journey through the world of literature with <b>LitGenre Explorer</b>.
+          </p>
+          <button
+            className="homepage-cta-btn homepage-cta-btn-animate"
+            onClick={handleContinue}
+            aria-label="Explore genres"
+            tabIndex={0}
+          >
+            Explore Genres →
+          </button>
         </div>
+      </section>
 
-        <button
-          className="theme-toggle homepage-cta-btn-animate"
-          style={{
-            marginTop: 36,
-            maxWidth: 220,
-            fontWeight: 700,
-            fontSize: "1.13rem",
-          }}
-          onClick={handleContinue}
-        >
-          Explore Genres →
-        </button>
-      </div>
-    </section>
+      {/* QUOTES / TESTIMONIAL SECTION */}
+      <section className="homepage-quotes-area" aria-label="Literary quotes and testimonials">
+        <figure key={quoteIdx} className="homepage-quote animated-quote" aria-live="polite">
+          <blockquote>
+            <span className="quote-mark" aria-hidden="true">“</span>
+            {literaryQuotes[quoteIdx].text}
+            <span className="quote-mark" aria-hidden="true">”</span>
+          </blockquote>
+          <figcaption>
+            — <span className="homepage-quote-author">{literaryQuotes[quoteIdx].author}</span>
+          </figcaption>
+        </figure>
+      </section>
+    </div>
   );
 }
 
