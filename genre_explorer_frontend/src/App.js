@@ -2,16 +2,62 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import GenreSelector from './components/GenreSelector';
+import BookGrid from './components/BookGrid';
 
+/**
+ * Main App component. Handles theme, genre selection, and book search/fetch/display.
+ */
 // PUBLIC_INTERFACE
 function App() {
   const [theme, setTheme] = useState('light');
   const [selectedGenre, setSelectedGenre] = useState('');
+  const [books, setBooks] = useState([]);
+  const [loadingBooks, setLoadingBooks] = useState(false);
+  const [error, setError] = useState('');
 
   // Effect to apply theme to document element
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  // Effect to fetch books from Google Books API when a genre is selected
+  useEffect(() => {
+    if (!selectedGenre) {
+      setBooks([]);
+      setError('');
+      return;
+    }
+    // Fetch books based on selected genre
+    setLoadingBooks(true);
+    setError('');
+    setBooks([]);
+
+    // Google Books API: https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults=16
+    const query = encodeURIComponent(`subject:${selectedGenre}`);
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=16&printType=books&orderBy=relevance`;
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Google Books API error');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.items && Array.isArray(data.items)) {
+          setBooks(data.items);
+        } else {
+          setBooks([]);
+        }
+        setLoadingBooks(false);
+        setError('');
+      })
+      .catch((err) => {
+        setLoadingBooks(false);
+        setBooks([]);
+        setError('Could not fetch books. Please try again later.');
+      });
+  }, [selectedGenre]);
 
   // PUBLIC_INTERFACE
   const toggleTheme = () => {
@@ -67,6 +113,13 @@ function App() {
           Learn React
         </a>
       </header>
+      <main>
+        <BookGrid
+          books={books}
+          loadingMessage={loadingBooks ? "Loading books..." : ""}
+          errorMessage={error}
+        />
+      </main>
     </div>
   );
 }
