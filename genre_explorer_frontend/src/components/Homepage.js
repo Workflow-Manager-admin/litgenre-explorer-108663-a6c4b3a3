@@ -65,7 +65,7 @@ function Homepage({ navigate }) {
           Jump into the <b>Explore</b> section to find book recommendations and insightful genre summaries.
         </p>
         <button
-          className="theme-toggle"
+          className="theme-toggle homepage-cta-btn-animate"
           style={{
             marginTop: 36,
             maxWidth: 220,

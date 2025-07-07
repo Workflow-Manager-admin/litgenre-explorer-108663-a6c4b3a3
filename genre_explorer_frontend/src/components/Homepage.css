@@ -1,3 +1,24 @@
+/* --- Animations for Homepage --- */
+@keyframes homepage-fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(38px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.0);
+  }
+}
+@keyframes homepage-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes image-scale-in {
+  from { opacity: 0; transform: scale(0.88);}
+  68%  { opacity: 1; transform: scale(1.09);}
+  to   { opacity: 1; transform: scale(1);}
+}
+
 .homepage-bg {
   position: relative;
   min-height: 85vh;
@@ -9,6 +30,7 @@
   /* background-image will be applied inline from React via imported asset */
   padding: 2.5rem 0.5rem 2.5rem 0.5rem;
   overflow: hidden;
+  animation: homepage-fade-in 0.74s cubic-bezier(0.11, 0.62, 0.23, 1.01) 0.08s both;
 }
 
 .homepage-bg::before {
@@ -82,4 +104,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: homepage-fade-slide-up 0.82s cubic-bezier(.13,.92,.36,1.12) 0.15s both;
+  /* prevent flash: */
+  opacity: 0;
+  will-change: transform, opacity;
 }
+
+.hp-illustration,
+.hp-reader {
+  animation: image-scale-in 0.93s cubic-bezier(.12,.91,.32,1.11) 0.28s both;
+  /* Different delay for right-side illustration */
+}
+.hp-reader {
+  animation-delay: 0.48s;
+}
+
+.homepage-cta-btn-animate {
+  opacity: 0;
+  animation: homepage-fade-slide-up 0.63s cubic-bezier(.2,.93,.31,1.13) 0.36s both;
+  outline: none;
+  transition:
+    box-shadow 0.19s cubic-bezier(.20,.81,.73,1.27),
+    transform 0.19s cubic-bezier(.19,.65,.66,1.11),
+    background 0.22s, color 0.19s;
+}
+.homepage-cta-btn-animate:focus-visible {
+  outline: 2.5px solid var(--accent, #FF6F61);
+  outline-offset: 2.5px;
+  box-shadow: 0 0 0 6px rgba(255,111,97,0.12), 0 6px 28px rgba(44,34,144,0.09);
+  background: var(--accent, #FF6F61);
+  color: #fff;
+}
+
+.homepage-cta-btn-animate:hover {
+  background: var(--accent, #FF6F61);
+  color: #fff;
+  transform: translateY(-3.5px) scale(1.037);
+  box-shadow: 0 6px 24px rgba(255,111,97,0.15);
+}
+
+.homepage-cta-btn-animate:active {
+  transform: scale(0.97);
+  filter: brightness(0.98);
+}
+
