@@ -1,0 +1,4 @@
+{
+    "command": "npm run test",
+    "working_directory": "/home/kavia/workspace/code-generation/litgenre-explorer-108663-a6c4b3a3/genre_explorer_frontend"
+}
