@@ -69,32 +69,20 @@ function Homepage({ navigate }) {
       {/* -- Decorative Stack of Books (bottom left) -- */}
       <img
         src={decorativeBookStack}
-        className="hp-illustration"
+        className="hp-illustration homepage-img"
         alt="Stack of books"
         aria-hidden="true"
         tabIndex={-1}
         draggable="false"
-        style={{
-          boxShadow:
-            "0 6px 35px rgba(140,120,100,0.16), 0 1px 8px rgba(60,30,10,0.08)",
-          borderRadius: "18px",
-          objectFit: "cover",
-        }}
       />
       {/* -- Decorative Reading Glasses on Book (top right) -- */}
       <img
         src={decorativeGlasses}
-        className="hp-reader"
+        className="hp-reader homepage-img"
         alt="Reading glasses on a book"
         aria-hidden="true"
         tabIndex={-1}
         draggable="false"
-        style={{
-          boxShadow:
-            "0 7px 28px rgba(80,75,90,0.22), 0 2px 8px rgba(100,90,120,0.11)",
-          borderRadius: "21px",
-          objectFit: "cover",
-        }}
       />
 
       <div className="homepage-content">

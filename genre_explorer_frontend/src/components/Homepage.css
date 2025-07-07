@@ -66,48 +66,79 @@
 }
 
 /* -- Decorative Books Image (bottom left) -- */
+.hp-illustration,
+.hp-reader {
+  /* All homepage images: responsive, consistent aspect ratio, no inline overrides */
+  aspect-ratio: 4/3; /* natural for illustrations/decorative image, can be overridden below */
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  border-radius: 17px;
+  max-width: 100%;
+  background: #eee;
+  transition: box-shadow 0.18s;
+}
+
 .hp-illustration {
   position: absolute;
-  bottom: 4.5vw;
-  left: 3vw;
-  width: 170px;
-  max-width: 29vw;
-  min-width: 92px;
+  bottom: 2vw;
+  left: 2vw;
+  width: 150px;
+  max-width: 24vw;
+  min-width: 80px;
   z-index: 2;
   opacity: 0.96;
-  box-shadow: 0 7px 28px rgba(80,70,90,0.19);
-  /* extra style from prop */
-  object-fit: cover;
+  box-shadow: 0 8px 30px rgba(120,108,80,0.13), 0 1px 9px rgba(60,30,10,0.06);
+  aspect-ratio: 5/4; /* Used for vertical stack of books */
+  border-radius: 18px;
 }
 
 /* -- Decorative Reading Glasses on Book (top right) -- */
 .hp-reader {
   position: absolute;
   top: 3vw;
-  right: 5vw;
-  width: 115px;
-  max-width: 22vw;
-  min-width: 70px;
+  right: 4vw;
+  width: 95px;
+  max-width: 16vw;
+  min-width: 54px;
   z-index: 2;
   opacity: 0.98;
-  box-shadow: 0 8px 28px rgba(80,75,90,0.16);
-  object-fit: cover;
+  box-shadow: 0 9px 25px rgba(90,80,99,0.13), 0 2px 7px rgba(100,90,120,0.09);
+  aspect-ratio: 5/3; /* Used for wider glasses/book */
+  border-radius: 16px;
+}
+
+.homepage-img {
+  display: block;
+  max-height: 28vh;
+  min-height: 48px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background: #eee;
+  aspect-ratio: auto;
 }
 
 @media (max-width: 950px) {
   .hp-illustration {
-    bottom: 1vw;
-    left: 2vw;
-    width: 110px;
-    min-width: 58px;
+    bottom: 0.7vw;
+    left: 1vw;
+    width: 93px;
+    min-width: 47px;
+    max-width: 18vw;
+    border-radius: 14px;
   }
   .hp-reader {
-    top: 4vw;
-    right: 2vw;
-    width: 70px;
-    min-width: 43px;
+    top: 2vw;
+    right: 1vw;
+    width: 58px;
+    min-width: 31px;
+    max-width: 9vw;
+    border-radius: 11px;
   }
 }
+
 @media (max-width: 600px) {
   .homepage-bg {
     padding: 2rem 0.2rem 1.7rem 0.2rem;
@@ -115,15 +146,26 @@
   }
   .hp-illustration {
     bottom: 0;
-    left: -4vw;
-    width: 76px;
-    opacity: 0.87;
+    left: -3vw;
+    width: 58px;
+    min-width: 28px;
+    max-width: 16vw;
+    opacity: 0.80;
+    border-radius: 10px;
   }
   .hp-reader {
     top: 0;
     right: 0;
-    width: 44px;
-    opacity: 0.85;
+    width: 26px;
+    min-width: 20px;
+    max-width: 9vw;
+    opacity: 0.78;
+    border-radius: 8px;
+  }
+  .homepage-img {
+    max-height: 17vh;
+    min-height: 26px;
+    border-radius: 10px;
   }
 }
 .homepage-content {
