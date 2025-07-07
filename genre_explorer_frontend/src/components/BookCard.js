@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./BookGrid.css";
+import "./BookCard.css";
 
 /**
  * PUBLIC_INTERFACE
@@ -34,9 +35,15 @@ function BookCard({ book, onClick }) {
     if (onClick) onClick(book);
   };
 
+  // Animation: fade/scale in on mount
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div
-      className="book-card"
+      className={`book-card${mounted ? " book-card-animate" : ""}`}
       tabIndex={0}
       role="button"
       aria-label={

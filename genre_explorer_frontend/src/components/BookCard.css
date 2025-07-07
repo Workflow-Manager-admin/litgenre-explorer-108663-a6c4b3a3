@@ -1,0 +1,77 @@
+.book-card-animate {
+  /* Subtle scale/fade on initial mount */
+  opacity: 0;
+  transform: scale(0.97);
+  animation: bookcard-fadein-scale 0.38s cubic-bezier(0.19,0.80,0.38,1.18) 0s forwards;
+  /* Prevent double anim on hover after mount */
+  will-change: opacity, transform;
+}
+
+@keyframes bookcard-fadein-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Interactive effects (already some in BookGrid.css, but we'll enhance): */
+.book-card {
+  transition:
+    box-shadow 0.17s cubic-bezier(.32,.82,.77,1.61),
+    border-color 0.19s,
+    background 0.25s,
+    transform 0.20s cubic-bezier(.45,1.52,.60,1),
+    filter 0.16s;
+  /* fallback in case BookGrid.css's .book-card transition is slow */
+}
+
+.book-card:hover,
+.book-card:focus-visible {
+  transform: translateY(-8px) scale(1.028);
+  box-shadow: 0 12px 38px 0 rgba(108,99,255,0.19), 0 2px 13px rgba(44,34,144,0.09);
+  border-color: var(--accent, #FF6F61);
+  outline: none;
+  filter: brightness(1.015) saturate(1.025);
+  z-index: 3;
+}
+
+.book-card:focus-visible {
+  /* Extra outline for accessibility */
+  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.15), 0 12px 38px rgba(108,99,255,0.17);
+  border-color: var(--text-secondary, #61dafb);
+}
+
+.book-card:active {
+  /* Slight shrink when actively being clicked */
+  transform: scale(0.985);
+  filter: brightness(0.984);
+}
+
+/* Bonus: Animate preview button on hover/focus */
+.book-card .book-preview-link {
+  transition: background 0.19s, color 0.15s, transform 0.14s;
+}
+.book-card:hover .book-preview-link,
+.book-card:focus-visible .book-preview-link {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.06);
+  box-shadow: 0 2px 12px rgba(255,111,97,0.13);
+}
+
+/* Prevent accidental hover stacking */
+@media (hover: none) and (pointer: coarse) {
+  .book-card:hover,
+  .book-card:focus-visible {
+    transform: none !important;
+    box-shadow: var(--shadow);
+  }
+}
